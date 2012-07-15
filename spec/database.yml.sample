@@ -1,0 +1,15 @@
+mysql:
+  adapter: mysql2
+  encoding: utf8
+  database: my_test_database_name
+  username: bob
+  password: 
+  host: localhost
+  port: 3306
+
+postgresql:
+  adapter: postgresql
+  encoding: utf8
+  database: my_test_database_name
+  username: bob
+  password: 

@@ -1,0 +1,5 @@
+*.gemfile.lock
+database.yml
+gemfiles/*
+log
+*.gem
