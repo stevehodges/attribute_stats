@@ -116,7 +116,9 @@ module AttributeStats
     end
 
     def setup_table_and_model(table)
-      @table_info << TableData.new(table.classify.constantize)
+      ar_class = ActiveRecord::Base.descendants.detect{|klass| klass.table_name == table }
+      return if ar_class.name == 'ActiveRecord::InternalMetadata' # Table for Rails 5 internal use only
+      @table_info << TableData.new(ar_class || table.classify.constantize)
     rescue NameError => ex
     end
 

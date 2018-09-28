@@ -92,7 +92,6 @@ Generates a sample migration syntax to remove all unused attributes. (This is ju
 The gem does not support:
 
 1. Detection of unset encrypted attributes. `attribute-stats` works by searching for empty values using SQL. If you are encrypting data before storing it in the database, a value of `nil` might have a value in the database which, decrypted, equals `nil`.
-1. Custom table names. If you are defining a model called House, and configure the model to use the table 'domiciles' instead of 'houses', `attribute-stats` skips analysis of the table. *(TODO: fix)*
 1. Tables not associated with a model. If your database has tables which do not correspond with a model (see point #2), `attribute-stats` skips analysis of that table. *(TODO: fix)*
 
 ## Compatability
@@ -115,6 +114,6 @@ Or, you can run tests for all supported Rails versions and supported databases:
 1. `bundle exec appraisal install` *(this Generates gemfiles for all permutations of our dependencies, so you'll see lots of bundler output))*
 1. `bundle exec appraisal rspec`. *(This runs rspec for each dependency permutation. If one fails, appraisal exits immediately and does not test permutations it hasn't gotten to yet. Tests are not considered passing until all 12 permutations are passing)*
 
-If you only want to test a certain dependency set, such as Rails 5.2 for MySQL: `bundle exec appraisals rails-5-2-mysql`. In this case, you would *not* need to configure postgresql in your database.yml, nor have postgres running on your machine.
+If you only want to test a certain dependency set, such as Rails 5.2 for MySQL: `bundle exec appraisals rails-5-2-mysql rspec`. In this case, you would *not* need to configure postgresql in your database.yml, nor have postgres running on your machine.
 
 You can view all available dependency sets in [Appraisals](Appraisals)

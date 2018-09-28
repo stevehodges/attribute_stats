@@ -22,7 +22,7 @@ EOF
   spec.homepage      = 'https://github.com/stevehodges/attribute_stats'
   spec.license       = 'MIT'
 
-  spec.required_ruby_version  = ">= 2.2.0"
+  spec.required_ruby_version  = ">= 2.0.0"
 
 	spec.files         = Dir.glob("lib/**/*") + %w(rakefile.rb LICENSE README.md)
   spec.bindir        = 'exe'
