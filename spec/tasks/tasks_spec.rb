@@ -7,7 +7,6 @@ describe 'rake tasks' do
     Address.create
     Address.create  line_1: 'Test'
   end
-
   after(:all) do
     Identity.delete_all
     Address.delete_all
@@ -37,7 +36,23 @@ describe 'rake tasks' do
         let(:task_name) { 'db:stats:unused_attributes' }
         it { expect{ execute }.to_not raise_error }
       end
+    end
+  end
 
+  possible_options = [
+    Rake::TaskArguments.new([],[]),
+    Rake::TaskArguments.new(arg_names, ['true',  'true']),
+    Rake::TaskArguments.new(arg_names, ['false', 'true']),
+    Rake::TaskArguments.new(arg_names, ['true',  'false']),
+    Rake::TaskArguments.new(arg_names, ['false','false']),
+  ]
+
+  setup_migration_generator_specs
+  possible_options.each do |option|
+    before { allow_any_instance_of(AttributeStats::GenerateMigration).to receive(:base_path).and_return(@base_path) }
+    let(:execute) { task.execute(option) }
+
+    context "options #{option.to_a}" do
       describe 'attribute_stats:migration', type: :task do
         let(:task_name) { 'attribute-stats:migration' }
         it { expect{ execute }.to_not raise_error }

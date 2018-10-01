@@ -12,9 +12,5 @@ module AttributeStats
     def output_unused_attributes
       super.to_json
     end
-
-    def output_migration
-      super.to_json
-    end
   end
 end

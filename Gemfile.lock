@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    attribute-stats (0.1.0)
+    attribute-stats (0.1.1)
       hirb (~> 0.7)
       rails (>= 4.2, < 6)
 
@@ -69,7 +69,7 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.7.0)
       mini_mime (>= 0.1.1)
-    marcel (0.3.2)
+    marcel (0.3.3)
       mimemagic (~> 0.3.2)
     method_source (0.9.0)
     mimemagic (0.3.2)
