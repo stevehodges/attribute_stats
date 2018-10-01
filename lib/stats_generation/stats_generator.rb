@@ -29,9 +29,9 @@ module AttributeStats
       output formatter.output_unused_attributes
     end
 
-    def migration
-      generate_migration
-      output formatter.output_migration
+    def generate_migration
+      fetch_empty_attributes
+      GenerateMigration.new(table_info: table_info, options: options).output_migration
     end
 
     def set_formatter(formatter_type)
@@ -102,11 +102,6 @@ module AttributeStats
         SetDormantTables.new(table_info: table_info, options: options).call
         true
       end
-    end
-
-    def generate_migration
-      fetch_empty_attributes
-      @migration ||= GenerateMigration.new(table_info: table_info, options: options)
     end
 
     def initialize_tables

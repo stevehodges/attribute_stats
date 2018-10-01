@@ -80,12 +80,10 @@ i.e. `rake db:stats:dormant_tables['1.year.ago',json,false]`
 ---
 
 #### rake attribute-stats:migration
-Generates a sample migration syntax to remove all unused attributes. (This is just output, not saved to disk. See the TODO below.)
+Generates a migration file to remove all unused attributes.
 
 **Argument Options:**
 1. consider_defaults_unused: true or false (default: false). This option considers attributes set to the databse default value to be unused.
-
-*TODO: actually save that generated file to the db/migrate path of the host Rails app.*
 
 ## Caveats
 

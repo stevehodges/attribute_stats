@@ -41,9 +41,5 @@ module AttributeStats
       end
       output
     end
-
-    def output_migration
-      @migration.data
-    end
   end
 end

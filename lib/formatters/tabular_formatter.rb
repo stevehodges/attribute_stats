@@ -65,11 +65,6 @@ module AttributeStats
       @buffer
     end
 
-    def output_migration
-      print_section_header "Migration Syntax to delete unused attributes"
-      @migration.to_migration_file
-    end
-
     private
 
     def puts(*values)
