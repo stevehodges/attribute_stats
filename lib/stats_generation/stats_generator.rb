@@ -34,6 +34,12 @@ module AttributeStats
       GenerateMigration.new(table_info: table_info, options: options).output_migration
     end
 
+    def unused_attribute_references
+      fetch_empty_attributes
+      SetAttributeReferences.new(table_info: table_info, options: options).execute
+      output formatter.output_attribute_references
+    end
+
     def set_formatter(formatter_type)
       formatter_was = options[:formatter]
       case formatter_type.to_s.downcase

@@ -1,6 +1,10 @@
 module AttributeStats
   class JSONFormatter < HashFormatter
 
+    def output_attribute_references
+      super.to_json
+    end
+
     def output_all_attributes
       super.to_json
     end

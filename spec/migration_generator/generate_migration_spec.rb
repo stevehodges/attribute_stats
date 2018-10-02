@@ -1,12 +1,16 @@
 require 'spec_helper'
-
 describe AttributeStats::GenerateMigration do 
+
+  include TableInfoMethods
+  include MigrationHelperMethods
+
   setup_migration_generator_specs
 
   describe '#output_migration' do
-    let(:instance) { AttributeStats::GenerateMigration.new }
+    let(:instance) { AttributeStats::GenerateMigration.new(table_info: @table_info) }
     let(:execute)  { instance.output_migration }
     context 'empty database' do
+      before { @table_info = [] }
       it 'returns nothing' do
         expect(execute).to be_blank
       end
@@ -20,11 +24,13 @@ describe AttributeStats::GenerateMigration do
       before(:all) do
         Identity.create first_name: '', last_name: nil, middle_initial: nil
         Address.create  line_1: 'Test'
+        set_table_info
       end
 
       after(:all) do
         Identity.delete_all
         Address.delete_all
+        @table_info = nil
       end
       after { FileUtils.rm(migration_files) }
 
@@ -50,7 +56,7 @@ describe AttributeStats::GenerateMigration do
 
       describe '#find_migration_class_suffix' do
         def execute
-          AttributeStats::GenerateMigration.new.output_migration
+          AttributeStats::GenerateMigration.new(table_info: @table_info).output_migration
         end
 
         it 'sets the file name suffix to 2 if there is already a migration with the same name' do

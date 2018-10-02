@@ -1,9 +1,10 @@
 module AttributeStats
   class AttributeInfo
-    attr_reader :count, :usage_percent, :name, :empty
+    attr_reader :count, :usage_percent, :name, :empty, :references
 
     def initialize(attribute_name)
       @name = attribute_name
+      @references = Hash.new(0)
     end
 
     def set_usage(record_count, table_total_record_count)
@@ -18,6 +19,14 @@ module AttributeStats
 
     def empty?
       @empty
+    end
+
+    def set_reference(reference_type, count)
+      references[reference_type] += count
+    end
+
+    def total_references
+      references.values.sum
     end
   end
 end

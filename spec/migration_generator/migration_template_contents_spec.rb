@@ -1,11 +1,12 @@
 require 'spec_helper'
+include TableInfoMethods
 
 describe AttributeStats::MigrationTemplateContents do 
 
   describe '#content' do
     context 'empty database' do
       before(:all) do
-        @results = AttributeStats::MigrationTemplateContents.new(migration_class_suffix: '11').content
+        @results = AttributeStats::MigrationTemplateContents.new(table_info: [], migration_class_suffix: '11').content
       end
       it 'returns nothing' do
         expect(@results).to be_blank
@@ -21,13 +22,15 @@ describe AttributeStats::MigrationTemplateContents do
         Address.create
         Address.create  line_1: 'Test'
 
-        @results = AttributeStats::MigrationTemplateContents.new(migration_class_suffix: '11').content
+        set_table_info
+        @results = AttributeStats::MigrationTemplateContents.new(table_info: @table_info, migration_class_suffix: '11').content
       end
 
       after(:all) do
         Identity.delete_all
         Address.delete_all
         @results = nil
+        @table_info = nil
       end
 
       def result_for(model_name, attribute_name)

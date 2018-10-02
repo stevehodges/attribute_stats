@@ -1,9 +1,7 @@
 module AttributeStats
   class MigrationTemplateContents
-    def initialize(table_info: nil, migration_class_suffix: nil)
-      @table_info = table_info
-      @table_info || set_table_info
-      @migration_class_suffix = migration_class_suffix
+    def initialize(table_info: [], migration_class_suffix: nil)
+      @table_info, @migration_class_suffix = table_info, migration_class_suffix
       @migration_buffer = ''
       @table_info.each do |table_info|
         add_migrations_for_table_to_buffer(table_info)
@@ -22,12 +20,6 @@ module AttributeStats
 end
       OUTPUT
       output
-    end
-
-    def set_table_info
-      stats_generator = AttributeStats::StatsGenerator.new
-      stats_generator.send(:fetch_empty_attributes)
-      @table_info = stats_generator.table_info
     end
 
     private

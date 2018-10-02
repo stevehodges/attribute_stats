@@ -1,8 +1,7 @@
 module AttributeStats
   class GenerateMigration
-    def initialize(table_info: nil, options: {})
+    def initialize(table_info: [], options: {})
       @table_info, @options = table_info, options
-      @table_info || set_table_info
     end
 
     def output_migration
@@ -11,12 +10,6 @@ module AttributeStats
         f.write(migration_template)
       end
       migration_file_path
-    end
-
-    def set_table_info
-      stats_generator = AttributeStats::StatsGenerator.new(@options)
-      stats_generator.send(:fetch_empty_attributes)
-      @table_info = stats_generator.table_info
     end
 
     private
