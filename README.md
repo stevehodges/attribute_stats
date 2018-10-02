@@ -18,17 +18,26 @@ Add `gem 'attribute-stats'` to your Gemfile, bundle, and follow the Usage instru
 
 You can use `AttributeStats` from within Rails (or a Rails console):
 
-    irb:1> stats = AttributeStats::StatsGenerator.new()
+    irb:1> stats = AttributeStats::StatsGenerator.new
+
     irb:2> stats.attribute_usage
     => {...} # a list of your attributes and what % of records have a value set
+
     irb:3> stats.unused_attributes
     => {...} # a list of your attributes which have no value set in the database
-    irb:4> stats.dormant_tables
+
+    irb:4> stats.unused_attribute_references
+    => [...] # a list counts of references to unused attributes in application code
+
+    irb:5> stats.dormant_tables
     => [...] # a list of your tables which have not been updated in awhile
-    irb:5> stats.migration
+
+    irb:6> stats.migration
     => # sample migration up/down to remove your unused attributes
-    irb:6> stats.set_formatter :json
-    irb:7> stats.migration # returns json instead of a hash
+
+    irb:7> stats.set_formatter :json
+
+    irb:8> stats.migration # returns json instead of a hash
 
 ### Rake Tasks
 
@@ -37,6 +46,7 @@ Rake tasks are available once you've installed the gem in your Gemfile and bundl
 * rake db:stats:dormant_tables
 * rake db:stats:attribute_usage
 * rake db:stats:unused_attributes
+* rake db:stats:unused_attribute_references
 * rake attribute-stats:generate_migration
 
 Each allows you to change the output to JSON if you'd like to pipe it into another application.
@@ -52,6 +62,18 @@ Lists all attributes which are unused (have a nil or empty value).
 3. verbose: true, false (default: true)
 
 i.e. `rake db:stats:unused_attributes[true,json,false]`
+
+---
+
+#### rake db:stats:unused_attribute_references
+For all unused attributes, outputs the number of times the attribute name is referenced in repo's app, views, config, and spec folders (except app/assets). This finds references which are symbols, wrapped in quotes, or accessed via dot notation. It is imprecise but gives you an idea of attributes may be used in the application code.
+
+**Argument Options:**
+1. consider_defaults_unused: true or false (default: false). This option considers attributes set to the databse default value to be unused.
+2. format: tabular, json  (default: tabular)
+3. verbose: true, false (default: true)
+
+i.e. `rake db:stats:unused_attribute_references[true,json,false]`
 
 ---
 
@@ -95,8 +117,6 @@ The gem does not support:
 ## Compatability
 
 The gem is tested and works with Rails version 4.2 through 5.2, with `mysql2`, `sqlite3`, and `postgresql` database adapters. You can view all tested dependency sets in [Appraisals](Appraisals)
-
-*Due to changes in ActiveRecord between 4.1 and 4.2, the gem breaks in versions below 4.2. In a future version of `attribute-stats`, I intend to add support to previous versions of Rails (at least back to 4.0).*
 
 ## Testing the gem
 
