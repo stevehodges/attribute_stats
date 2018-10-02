@@ -6,7 +6,7 @@ module MigrationHelperMethods
 
 	def setup_migration_generator_specs
 		before(:all) do
-			tmp_path   = File.join File.dirname(__FILE__), 'tmp'
+			tmp_path   = File.join __dir__, 'tmp'
   	  @base_path = FileUtils.mkdir(tmp_path)[0]
 	  end
 		after(:all) do

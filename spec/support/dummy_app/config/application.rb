@@ -14,8 +14,8 @@ Rails.application.initialize!(__dir__)
 database_config = SpecDatabase.setup_database
 ActiveRecord::Base.establish_connection database_config
 
-require_relative 'models'
-require_relative 'db_schema'
+require_relative '../app/models/models'
+require_relative '../db/schema'
 
 # load rake tasks
-Dir[File.join(__dir__, 'tasks', '*.rake')].each {|f| load f}
+Dir[File.join(__dir__, '..', 'tasks', '*.rake')].each {|f| load f}

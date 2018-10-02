@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    attribute-stats (0.1.1)
+    attribute-stats (0.2.0)
       hirb (~> 0.7)
       rails (>= 4.2, < 6)
 

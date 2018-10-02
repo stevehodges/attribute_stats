@@ -28,6 +28,30 @@ module AttributeStats
       @buffer
     end
 
+    def output_attribute_references
+      output = []
+      @table_info.each do |table_info|
+        table_info.attributes.each do |attribute|
+          next unless attribute.empty?
+          output << {
+                      model: table_info.name,
+             attribute_name: attribute.name,
+             all_references: attribute.total_references,
+                       code: attribute.references['app'],
+                      specs: attribute.references['spec'],
+                      views: attribute.references['views']
+          } 
+        end
+      end
+      output.sort!{|a,b| a[:all_references] <=> b[:all_references]}
+      if output.empty?
+        puts "No unused attributes found"
+      else
+        print_table output, title: ['Attribute Code References', 'Mentions of the attribute name in app/ (except assets), lib/, config/, and spec/', '(symbol or dot notation, or wrapped in quotes)']
+      end
+      @buffer
+    end
+
     def output_dormant_tables
       output = []
       @table_info.each do |table_info|
@@ -106,7 +130,8 @@ module AttributeStats
 
     def header_order(column_names)
       [:model, :table_name, :attribute_name,
-        :last_updated, :set_count, :set_percent] & column_names
+        :last_updated, :set_count, :set_percent,
+        :code, :views, :specs] & column_names
     end
 
     def formatted_headers(column_names)

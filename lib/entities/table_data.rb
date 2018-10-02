@@ -37,14 +37,18 @@ module AttributeStats
       attribute
     end
 
-    def unused_attributes
-      @unused_attributes ||= begin
+    def unused_attribute_info
+      @unused_attribute_info ||= begin
         attrs = []
         @attributes.each do |attribute|
-          attrs << attribute.name if attribute.empty?
+          attrs << attribute if attribute.empty?
         end
         attrs
       end
+    end
+
+    def unused_attributes
+      @unused_attributes ||= unused_attribute_info.map(&:name)
     end
   end
 end
